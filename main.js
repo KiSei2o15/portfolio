@@ -33,7 +33,7 @@ scene.add(cube);
 // 创建 FBXLoader 实例
 const fbxLoader = new THREE.FBXLoader();
 fbxLoader.load(
-    'models/mdl_ch049.fbx', // FBX 模型路径
+    'models/test.fbx', // FBX 模型路径
     function (object) {
         // 如果模型包含动画，可以设置 AnimationMixer 来播放动画
         // const mixer = new THREE.AnimationMixer(object);
