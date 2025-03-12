@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的互动作品集</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 导航菜单 -->
+    <nav>
+        <ul>
+            <li><a href="#2d">2D作品</a></li>
+            <li><a href="#3d">3D作品</a></li>
+        </ul>
+    </nav>
+    
+    <!-- 2D作品展示区 -->
+    <section id="2d">
+        <h2>2D插画作品</h2>
+        <div class="gallery">
+            <img src="image1.jpg" alt="作品1">
+            <img src="image2.jpg" alt="作品2">
+            <!-- 更多图片 -->
+        </div>
+    </section>
+    
+    <!-- 3D作品展示区 -->
+    <section id="3d">
+        <h2>3D建模作品</h2>
+        <!-- 3D模型展示容器 -->
+        <div id="three-container"></div>
+    </section>
+    
+    <!-- 引入Three.js和OrbitControls -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/FBXLoader.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
