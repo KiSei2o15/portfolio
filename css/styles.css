@@ -1,0 +1,110 @@
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+  }
+  
+  /* 导航菜单 */
+  header {
+    background: #333;
+    padding: 10px 0;
+  }
+  
+  header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  header nav ul li {
+    margin: 0 15px;
+  }
+  
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* 主要内容 */
+  main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  
+  /* 个人资料区域 */
+  #profile {
+    text-align: center;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .profile-info img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  
+  .bio {
+    max-width: 600px;
+    margin-top: 10px;
+  }
+  
+  /* 作品画廊 */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .work-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    transition: box-shadow 0.3s;
+  }
+  
+  .work-item:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  
+  .work-item img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* 页脚 */
+  footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #333;
+    color: #fff;
+    margin-top: 40px;
+  }
+  
+  #three-container {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    background: #f2f2f2; /* 或者你想要的颜色/渐变 */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  

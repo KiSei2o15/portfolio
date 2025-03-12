@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的互动作品集</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的作品集 - 主页</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- 导航菜单 -->
+  <!-- 导航菜单 -->
+  <header>
     <nav>
-        <ul>
-            <li><a href="#2d">2D作品</a></li>
-            <li><a href="#3d">3D作品</a></li>
-        </ul>
+      <ul>
+        <li><a href="index.html">主页</a></li>
+        <li><a href="2d.html">2D作品</a></li>
+        <li><a href="3d.html">3D作品</a></li>
+        <li><a href="about.html">关于我</a></li>
+      </ul>
     </nav>
-    
-    <!-- 2D作品展示区 -->
-    <section id="2d">
-        <h2>2D插画作品</h2>
-        <div class="gallery">
-            <img src="image1.jpg" alt="作品1">
-            <img src="image2.jpg" alt="作品2">
-            <!-- 更多图片 -->
+  </header>
+
+  <!-- 主要内容 -->
+  <main>
+    <!-- 个人资料区域 -->
+    <section id="profile">
+      <h1>欢迎来到我的作品集</h1>
+      <div class="profile-info">
+        <img src="assets/images/yourphoto.jpg" alt="我的照片">
+        <div class="bio">
+          <h2>关于我</h2>
+          <p>这里是你的个人简介，你可以写写你的背景、技能和创作理念。让访客对你有个初步了解。</p>
         </div>
+      </div>
     </section>
-    
-    <!-- 3D作品展示区 -->
-    <section id="3d">
-        <h2>3D建模作品</h2>
-        <!-- 3D模型展示容器 -->
-        <div id="three-container"></div>
+
+    <!-- 精选作品展示 -->
+    <section id="featured-works">
+      <h2>精选作品</h2>
+      <div class="gallery">
+        <div class="work-item">
+          <a href="2d.html">
+            <img src="assets/images/featured1.jpg" alt="2D作品示例">
+            <p>2D作品示例</p>
+          </a>
+        </div>
+        <div class="work-item">
+          <a href="3d.html">
+            <img src="assets/images/featured2.jpg" alt="3D作品示例">
+            <p>3D作品示例</p>
+          </a>
+        </div>
+      </div>
     </section>
-    
-    <!-- 引入Three.js和OrbitControls -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js"></script>
-    <script src="https://threejs.org/examples/js/loaders/FBXLoader.js"></script>
-    <script src="main.js"></script>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 你的名字. 版权所有.</p>
+  </footer>
 </body>
 </html>

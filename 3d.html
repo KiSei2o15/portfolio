@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>我的作品集 - 多模型切换</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    #three-container {
+      width: 100%;
+      height: 500px;
+      background: rgb(255, 255, 255)fff;
+      margin-top: 20px;
+    }
+    .model-switcher {
+      text-align: center;
+      margin: 20px;
+    }
+    .model-switcher button {
+      margin: 0 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航菜单 -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">主页</a></li>
+        <li><a href="2d.html">2D作品</a></li>
+        <li><a href="3d.html">3D作品</a></li>
+        <li><a href="about.html">关于我</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 主要内容 -->
+  <main>
+    <h1>3D 多模型切换示例</h1>
+    <div class="model-switcher">
+      <button id="btnModelA">显示模型A</button>
+      <button id="btnModelB">显示模型B</button>
+      <button id="btnModelC">显示模型C</button>
+    </div>
+
+    <!-- Three.js 渲染容器 -->
+    <div id="three-container"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 你的名字. 版权所有.</p>
+  </footer>
+
+  <!-- 引入 Three.js 及相关扩展（建议使用 jsDelivr CDN 确保链接有效） -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/fflate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
+  <!-- 加载3D页面相关脚本 -->
+  <script src="js/main-3d.js"></script>
+</body>
+</html>
