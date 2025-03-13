@@ -6,10 +6,10 @@
   <link rel="stylesheet" href="css/styles.css">
   <style>
     #three-container {
-      width: 100%;
-      height: 500px;
+      width: 80%;
+      height: 80%;
       background: rgb(255, 255, 255)fff;
-      margin-top: 20px;
+      display: flex;
     }
     .model-switcher {
       text-align: center;
@@ -24,7 +24,8 @@
 </head>
 <body>
   <!-- 导航菜单 -->
-  <header>
+  <div>
+  <header>   
     <nav>
       <ul>
         <li><a href="index.html">主页</a></li>
@@ -32,13 +33,14 @@
         <li><a href="3d.html">3D作品</a></li>
         <li><a href="about.html">关于我</a></li>
       </ul>
-    </nav>
+    </nav>  
   </header>
+  </div>
 
   <!-- 主要内容 -->
   <main>
-    <h1>3D 多模型切换示例</h1>
-    <div class="model-switcher">
+     <div><h2>3D 多模型切换示例</h2>
+    <class="model-switcher">
       <button id="btnModelA">显示模型A</button>
       <button id="btnModelB">显示模型B</button>
       <button id="btnModelC">显示模型C</button>
@@ -48,8 +50,11 @@
     <div id="three-container"></div>
   </main>
 
-  <footer>
+  
+    <footer>
+      <div>
     <p>&copy; 2025 你的名字. 版权所有.</p>
+     </div>
   </footer>
 
   <!-- 引入 Three.js 及相关扩展（建议使用 jsDelivr CDN 确保链接有效） -->

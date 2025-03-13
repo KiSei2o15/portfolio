@@ -1,72 +1,112 @@
-// 1. 基本场景、相机、渲染器
-const container = document.getElementById('three-container');
-const scene = new THREE.Scene();
+// ========== 全局变量 ========== //
+let camera, scene, renderer, controls;
+let loadedModels = [];      // 存储加载的模型
+let currentModelIndex = null; // 当前显示的模型索引
 
-const camera = new THREE.PerspectiveCamera(
-  75,
-  container.clientWidth / container.clientHeight,
-  0.1,
-  1000
-);
-camera.position.set(0, 2, 5);
+// ========== 初始化 ========== //
+function init() {
+  // 1. 获取容器及其宽高
+  const container = document.getElementById('three-container');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.setClearColor(0x000000, 1); // 或者设置透明 background
-container.appendChild(renderer.domElement);
+  // 2. 创建场景
+  scene = new THREE.Scene();
 
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
+  // 3. 创建摄像机
+  camera = new THREE.PerspectiveCamera(75, width / height, 0.001, 1000);
+  camera.position.set(0, 2, 5);
 
-// 2. 基础光照
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-scene.add(ambientLight);
+  // 4. 创建渲染器，开启透明
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(width, height);
+  // 让渲染背景完全透明，这样能透出容器背景色
+  renderer.setClearColor(0x000000, 0);
+  container.appendChild(renderer.domElement);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(5, 10, 7.5);
-scene.add(directionalLight);
+  // 5. 轨道控制器（OrbitControls）
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; // 缓动效果
 
-// 3. 准备一个数组来存放加载后的模型对象
-const loadedModels = [];
-let currentModelIndex = null;
+  // 6. 光源
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+  scene.add(ambientLight);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(5, 10, 7.5);
+  scene.add(directionalLight);
 
-// 4. 加载多个 FBX 模型
-const fbxLoader = new THREE.FBXLoader();
-const modelsToLoad = [
-  'assets/models/test1.fbx',
-  'assets/models/test2.fbx',
-  'assets/models/test3.fbx'
-];
+  // 7. 加载多个 FBX 模型
+  loadModels();
 
-modelsToLoad.forEach((path, i) => {
-  fbxLoader.load(
-    path,
-    (object) => {
-      // 缩放和位置
-      object.scale.set(0.01, 0.01, 0.01);
-      object.visible = false; // 初始都先隐藏
-      scene.add(object);
-      loadedModels[i] = object;
+  // 8. 监听窗口大小变化
+  window.addEventListener('resize', onWindowResize);
 
-      console.log(`模型 ${i} 加载完成:`, path);
+}
 
-      // 如果是第一个加载完成的模型，可以默认显示
-      if (i === 0) {
-        showModel(0);
+// ========== 加载模型函数 ========== //
+function loadModels() {
+  const fbxLoader = new THREE.FBXLoader();
+
+  // 这里放你要加载的多个 FBX 文件路径
+  const modelsToLoad = [
+    'assets/models/test1.fbx',
+    'assets/models/test2.fbx',
+    'assets/models/test3.fbx'
+  ];
+
+  modelsToLoad.forEach((path, i) => {
+    fbxLoader.load(
+      path,
+      (object) => {
+        // 缩放 & 初始隐藏
+        object.scale.set(0.01, 0.01, 0.01);
+        object.visible = false;
+        scene.add(object);
+        //
+        //  计算模型包围盒
+        const box = new THREE.Box3().setFromObject(object);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+
+        // 调整摄像机位置，让模型充满视图
+        const maxSize = Math.max(size.x, size.y, size.z);
+        const fitHeightDistance = maxSize / (2 * Math.atan(Math.PI * camera.fov / 360));
+        const fitWidthDistance = fitHeightDistance / camera.aspect;
+        const distance = Math.max(fitHeightDistance, fitWidthDistance);
+      
+        // 将摄像机沿 z 轴方向定位（你也可以根据需求调整方向）
+        camera.position.set(center.x, center.y, center.z + distance * 1.2);
+        camera.lookAt(center);
+      
+        // 更新 OrbitControls 目标
+        controls.target.copy(center);  
+        controls.update();
+
+        // 存到数组
+        loadedModels[i] = object;
+        console.log(`模型 ${i} 加载完成:`, path);
+
+        // 默认先显示第一个加载完成的模型
+        if (i === 0) {
+          showModel(0);
+        }
+      },
+      
+      (xhr) => {
+        // 加载进度
+        const percent = (xhr.loaded / xhr.total * 100).toFixed(2);
+        console.log(`模型 ${i} 加载进度: ${percent}%`);
+      },
+      (error) => {
+        console.error(`模型 ${i} 加载失败:`, error);
       }
-    },
-    (xhr) => {
-      console.log(`模型 ${i} 加载进度: ${ (xhr.loaded / xhr.total * 100).toFixed(2) }%`);
-    },
-    (error) => {
-      console.error(`模型 ${i} 加载失败:`, error);
-    }
-  );
-});
+    );
+  });
+}
 
-// 5. 切换函数
+// ========== 切换模型函数 ========== //
 function showModel(index) {
-  // 如果当前有模型显示，先隐藏它
+  // 隐藏当前模型
   if (currentModelIndex !== null && loadedModels[currentModelIndex]) {
     loadedModels[currentModelIndex].visible = false;
   }
@@ -77,7 +117,25 @@ function showModel(index) {
   }
 }
 
-// 6. 按钮点击事件：切换模型
+// ========== 窗口自适应 ========== //
+function onWindowResize() {
+  const container = document.getElementById('three-container');
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+
+// ========== 动画循环 ========== //
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+// ========== 按钮事件绑定 ========== //
+// 监听按钮点击来切换模型
 document.getElementById('btnModelA').addEventListener('click', () => {
   showModel(0);
 });
@@ -88,20 +146,6 @@ document.getElementById('btnModelC').addEventListener('click', () => {
   showModel(2);
 });
 
-// 7. 监听窗口大小
-window.addEventListener('resize', onWindowResize);
-function onWindowResize() {
-  const w = container.clientWidth;
-  const h = container.clientHeight;
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
-  renderer.setSize(w, h);
-}
-
-// 8. 动画循环
-function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene, camera);
-}
+// ========== 启动 ========== //
+init();
 animate();
